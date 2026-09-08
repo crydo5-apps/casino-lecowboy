@@ -15,7 +15,7 @@ const SYMBOL_ASSETS = {
   bronze: 'bronze-coin.png', silver: 'silver-coin.png', gold: 'gold-coin.png', diamond: 'diamond.png',
   clover: 'green-clover.png', goldclover: 'gold-clover.png', bag: 'loot-bag.png', reload: 'reload.png'
 };
-const SYMBOL_ASSET_ROOT = './attached_assets/generated_images/symbols/';
+const SYMBOL_ASSET_ROOT = './attached_assets/generated_images/symbols/processed/';
 
 const symbolClass = (item) => {
   if (!item) return 'royal';
