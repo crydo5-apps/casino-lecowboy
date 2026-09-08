@@ -8,6 +8,14 @@ export const t = (key, values = {}) => {
 const $ = (id) => document.getElementById(id);
 const setText = (id, value) => { const node=$(id); if (node) node.textContent=String(value); };
 const cellKey = (r,c) => `${r}:${c}`;
+const SYMBOL_ASSETS = {
+  '10': 'royal-10.png', J: 'royal-j.png', Q: 'royal-q.png', K: 'royal-k.png', A: 'royal-a.png',
+  hat: 'cowboy-hat.png', cactus: 'cactus.png', pistols: 'crossed-pistols.png', skull: 'skull.png', badge: 'sheriff-badge.png',
+  wild: 'wanted-wild.png', scatter: 'fs-scatter.png', cylinder: 'revolver-cylinder.png',
+  bronze: 'bronze-coin.png', silver: 'silver-coin.png', gold: 'gold-coin.png', diamond: 'diamond.png',
+  clover: 'green-clover.png', goldclover: 'gold-clover.png', bag: 'loot-bag.png', reload: 'reload.png'
+};
+const SYMBOL_ASSET_ROOT = './attached_assets/generated_images/symbols/';
 
 const symbolClass = (item) => {
   if (!item) return 'royal';
@@ -33,7 +41,8 @@ export function renderGrid(grid, options = {}) {
     if (winners.has(cellKey(r,c))) cell.classList.add('winner');
     if (options.drop) cell.classList.add('drop');
     if (shot === cellKey(r,c)) cell.classList.add('shot-target');
-    const symbol=document.createElement('div'); symbol.className=`symbol ${symbolClass(item)}`; symbol.textContent=symbolLabel(item);
+    const symbol=document.createElement('div'); const className=symbolClass(item); const assetKey=item?.kind==='special'?item.subtype:item?.kind==='cylinder'?'cylinder':item?.id; symbol.className=`symbol ${className}`; symbol.textContent=symbolLabel(item); symbol.setAttribute('aria-label',symbolLabel(item));
+    if (SYMBOL_ASSETS[assetKey]) { symbol.classList.add('has-art'); symbol.style.backgroundImage=`url("${SYMBOL_ASSET_ROOT}${SYMBOL_ASSETS[assetKey]}")`; }
     if (item?.value && item.kind==='special' && !['clover','goldclover'].includes(item.subtype)) { const badge=document.createElement('span'); badge.className='special-value'; badge.textContent=`${item.value}×`; symbol.appendChild(badge); }
     cell.appendChild(symbol); root.appendChild(cell);
   }));
@@ -71,7 +80,7 @@ function paragraph(text) { const p=document.createElement('p'); p.className='mod
 export function showPaytable() {
   const card=modalFrame(t('modal.paytableTitle'),t('modal.paytableIntro')); const grid=document.createElement('div'); grid.className='pay-grid';
   const items=[['10','10 / J / Q / K / A'],['hat',t('pay.hat')],['cactus',t('pay.cactus')],['pistols',t('pay.pistols')],['skull',t('pay.skull')],['badge',t('pay.badge')],['wild',t('pay.wild')],['scatter',t('pay.scatter')]];
-  items.forEach(([id,name])=>{const item=document.createElement('div');item.className='pay-card';const icon=document.createElement('span');icon.className=`pay-symbol ${id}`;icon.textContent=id==='10'?'10':symbolLabel({kind:'regular',id});const label=document.createElement('span');label.textContent=name;const value=document.createElement('strong');value.textContent=id==='wild'||id==='scatter'?'FEATURE':id==='10'?'0.2×–50×':id==='badge'?'1×–200×':id==='hat'||id==='cactus'?'0.4×–75×':'0.6×–100×';item.append(icon,label,value);grid.appendChild(item);});
+  items.forEach(([id,name])=>{const item=document.createElement('div');item.className='pay-card';const icon=document.createElement('span');icon.className=`pay-symbol ${id}`;icon.textContent=id==='10'?'10':symbolLabel({kind:'regular',id});icon.setAttribute('aria-label',icon.textContent);if(SYMBOL_ASSETS[id]){icon.classList.add('has-art');icon.style.backgroundImage=`url("${SYMBOL_ASSET_ROOT}${SYMBOL_ASSETS[id]}")`;}const label=document.createElement('span');label.textContent=name;const value=document.createElement('strong');value.textContent=id==='wild'||id==='scatter'?'FEATURE':id==='10'?'0.2×–50×':id==='badge'?'1×–200×':id==='hat'||id==='cactus'?'0.4×–75×':'0.6×–100×';item.append(icon,label,value);grid.appendChild(item);});
   section(card,t('modal.symbols'),grid); section(card,t('modal.features'),paragraph(t('modal.featureText'))); section(card,t('modal.bonuses'),paragraph(t('modal.bonusText'))); section(card,t('modal.gamble'),paragraph(t('modal.gambleText'))); card.appendChild(paragraph(t('modal.disclosure')));
 }
 
