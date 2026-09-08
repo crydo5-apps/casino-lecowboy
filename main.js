@@ -104,5 +104,12 @@ function bind() {
   document.addEventListener('keydown',(event)=>{if(event.code==='Space' && state.gameState==='IDLE' && document.getElementById('modalRoot').classList.contains('hidden')){event.preventDefault();runSpin();}});
 }
 
-async function boot() { state=await loadState(); bind(); sync(); renderGrid(state.grid.length===5?state.grid:rollGrid({allowScatter:false}).grid); setStatus('status.ready'); }
+async function boot() {
+  try {
+    const response = await fetch('./locales/en.json');
+    const messages = await response.json();
+    window.miniappI18n = { t(key, values = {}) { const value = key.split('.').reduce((current, part) => current?.[part], messages); return String(value ?? key).replace(/\{(\w+)\}/g, (_, name) => values[name] ?? `{${name}}`); } };
+  } catch (error) { /* The host miniapp may provide its own translator. */ }
+  state=await loadState(); bind(); sync(); renderGrid(state.grid.length===5?state.grid:rollGrid({allowScatter:false}).grid); setStatus('status.ready');
+}
 window.addEventListener('DOMContentLoaded',boot);
