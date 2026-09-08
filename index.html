@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#271711">
+  <title>Le Cowboy Revolver Slots</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rye&family=Barlow+Condensed:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-backdrop" aria-hidden="true"><span class="sun-disc"></span><span class="mountain mountain-a"></span><span class="mountain mountain-b"></span><span class="tumble tumble-a"></span><span class="tumble tumble-b"></span></div>
+  <main id="app" class="game-shell">
+    <header class="topbar">
+      <div class="brand-lockup">
+        <span class="brand-kicker" data-i18n="brand.kicker">SMOKEY'S</span>
+        <h1 data-i18n="brand.title">LE COWBOY</h1>
+      </div>
+      <div class="hud-group">
+        <div class="hud-chip balance-chip"><span class="hud-label" data-i18n="hud.balance">BALANCE</span><strong id="balanceValue">1,000.00</strong></div>
+        <div class="hud-chip"><span class="hud-label" data-i18n="hud.bet">BET</span><strong id="betValue">1.00</strong></div>
+        <button id="infoButton" class="icon-button" type="button" data-i18n-aria-label="buttons.info" aria-label="How to play"><span>i</span></button>
+        <button id="soundButton" class="icon-button sound-on" type="button" data-i18n-aria-label="buttons.sound" aria-label="Toggle sound"><span id="soundIcon">♫</span></button>
+      </div>
+    </header>
+
+    <section class="status-strip" aria-live="polite">
+      <div id="bonusBadge" class="bonus-badge hidden"><span id="bonusName">BONUS</span><strong id="freeSpinsValue">0 FS</strong></div>
+      <div id="statusMessage" class="status-message" data-i18n="status.ready">Ready when you are, cowboy.</div>
+      <div id="winValue" class="win-value">WIN <strong>0.00</strong></div>
+    </section>
+
+    <section class="game-stage" aria-label="Le Cowboy game">
+      <div class="feature-ribbon hidden" id="collectorPanel"><span class="ribbon-label" data-i18n="collector.label">BULLET COLLECTOR</span><span class="bullet-stack" id="bulletStack"></span><strong id="bulletCount">0</strong></div>
+      <div class="reel-frame">
+        <div class="reel-header"><span data-i18n="reels.cluster">6 × 5 CLUSTER REELS</span><span class="reel-rule" data-i18n="reels.rule">5 CONNECTED TO WIN</span></div>
+        <div id="reelGrid" class="reel-grid" role="grid" aria-label="Slot symbols"></div>
+        <div class="grid-glow" aria-hidden="true"></div>
+      </div>
+      <div class="character-strip">
+        <div id="smokey" class="smokey" aria-label="Smokey the cowboy raccoon"><div class="smokey-hat">⌒</div><div class="smokey-face"><span class="eye eye-a"></span><span class="eye eye-b"></span><span class="mask"></span><span class="smokey-nose"></span></div><div class="smokey-body"><span class="vest"></span><span class="gun gun-a">╱</span><span class="gun gun-b">╲</span></div></div>
+        <div class="character-copy"><span class="eyebrow" data-i18n="character.eyebrow">THE BANDIT</span><strong data-i18n="character.name">SMOKEY</strong><span id="characterLine" data-i18n="character.idle">Keep your eyes peeled.</span></div>
+        <div class="shot-counter hidden" id="shotCounter"><span data-i18n="revolver.shots">SHOTS</span><strong>0</strong></div>
+      </div>
+    </section>
+
+    <section class="control-dock">
+      <div class="control-row">
+        <div class="bet-control"><span class="control-label" data-i18n="controls.bet">YOUR BET</span><div class="stepper"><button id="betDown" type="button" aria-label="Decrease bet">−</button><strong id="betReadout">1.00</strong><button id="betUp" type="button" aria-label="Increase bet">+</button></div></div>
+        <button id="maxBetButton" class="secondary-button" type="button" data-i18n="buttons.maxBet">MAX BET</button>
+        <button id="autoplayButton" class="secondary-button" type="button"><span data-i18n="buttons.autoplay">AUTOPLAY</span><small id="autoplayCount"></small></button>
+        <button id="turboButton" class="secondary-button turbo-button" type="button"><span data-i18n="buttons.turbo">TURBO</span><small id="turboState">OFF</small></button>
+      </div>
+      <div class="action-row">
+        <button id="buyButton" class="buy-button" type="button"><span data-i18n="buttons.buy">BUY BONUS</span><small>FEATURES</small></button>
+        <button id="spinButton" class="spin-button" type="button"><span class="spin-star">★</span><span data-i18n="buttons.spin">SPIN</span><small id="spinHint">1.00</small></button>
+      </div>
+    </section>
+
+    <footer class="footer-note"><span data-i18n="footer.rtp">96.28% RTP • MAX WIN 25,000×</span><button id="paytableButton" type="button" data-i18n="buttons.paytable">PAYTABLE & RULES</button></footer>
+  </main>
+
+  <div id="modalRoot" class="modal-root hidden" role="dialog" aria-modal="true" aria-labelledby="modalTitle"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
